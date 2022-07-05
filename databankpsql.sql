@@ -207,7 +207,7 @@ SELECT
     CASE WHEN monthly_txn IS NOT NULL THEN monthly_txn ELSE 0 END monthly_txn,
     SUM(monthly_txn) OVER (PARTITION BY customer_id ORDER BY month_end
                           ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) closing_balance
-FROM cte_join_rows        
+FROM cte_join_rows  ;      
 
 
 /* B.5 Comparing the closing balance of a customer’s first month and the closing balance from their second nth, what percentage of customers:
@@ -265,7 +265,7 @@ FROM cte_join_rows
 SELECT 
     *,
     LAG(closing_balance) OVER (PARTITION BY customer_id ORDER BY month_end) previous_CB
-FROM cte_aggregate 
+FROM cte_aggregate;
 
 -- calculate requirements 
 
@@ -296,7 +296,7 @@ SELECT
     (100*increase_cb/positive_cases) pct_increased_balance, 
     (100*decrease_cb/positive_cases) pct_decreased_balance, 
     (100*switch_to_negative/positive_cases) pct_negative_balance
-FROM cte_grouping
+FROM cte_grouping;
 
 
 -- however this answer has note on question iii and iv: opening months should be emphasized as the first month. 
